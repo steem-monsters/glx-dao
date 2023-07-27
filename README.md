@@ -1,6 +1,6 @@
 # GLX DAO - Comprehensive Readme
 
-GLX DAO is a Decentralized Autonomous Organization that implements a governance token contract called GLX, which allows users to participate in voting on proposals to influence the decision-making process within the organization. This Readme provides a comprehensive guide on how to set up and run the GLX DAO application using TypeScript and Hardhat.
+GLX DAO is a Decentralized Autonomous Organization that implements a governance token contract called GLX, which allows users to participate in voting on proposals to influence the decision-making process within the organization. This Readme provides a comprehensive guide on how to set up and run the GLX DAO application using TypeScript and Hardhat while also covering security measures for connecting and storing private keys for wallets.
 
 ## Table of Contents
 
@@ -12,6 +12,8 @@ GLX DAO is a Decentralized Autonomous Organization that implements a governance 
 - [Deployment](#deployment)
 - [Interacting with the GLX DAO](#interacting-with-the-glx-dao)
 - [Testing](#testing)
+- [Connecting and Storing Private Keys](#connecting-and-storing-private-keys)
+- [Additional Security Measures](#additional-security-measures)
 - [Additional Resources](#additional-resources)
 
 ## Getting Started
@@ -111,12 +113,26 @@ npx hardhat test --network <network-name>
 
 Replace `<network-name>` with the name of the network you want to test on.
 
+## Connecting and Storing Private Keys
+
+To connect to an Ethereum network, you will need a private key associated with an Ethereum account. However, storing private keys in a version-controlled file (e.g., `secrets.json`) is not secure, especially when working in a team or publishing the code publicly.
+
+To enhance security, consider using environment variables or an external secure storage solution to manage private keys securely. Popular solutions for managing private keys securely include:
+
+- **Environment Variables**: Set the private key as an environment variable on your development machine and read it in your code using a library like `dotenv`. Ensure that the `.env` file is added to `.gitignore` to prevent accidental exposure of private keys in version control.
+
+- **Hardware Wallets**: Use hardware wallets like Ledger or Trezor to manage private keys securely. These wallets allow you to sign transactions securely without exposing the private key to the development environment.
+
+## Additional Security Measures
+
+- **Multi-Signature Contracts**: For important actions within the DAO, consider implementing multi-signature contracts that require multiple parties to sign off on a transaction before it can be executed. This adds an extra layer of security and prevents single points of failure.
+
+- **Security Audits**: Consider conducting security audits of the smart contracts by reputable third-party auditors. Audits can help identify potential vulnerabilities and security issues in the code.
+
+- **Timelocks**: Implement timelocks for critical actions to introduce a delay before executing sensitive operations. This allows time for community review and intervention in case of any unexpected issues.
+
 ## Additional Resources
 
 For more information on Solidity, Hardhat, and Ethereum development, refer to the following resources:
 
-- Solidity Documentation: https://docs.soliditylang.org/
-
-- Hardhat Documentation: https://hardhat.org/getting-started/
-
-- Ethereum Development with Hardhat and Typescript:
+- Solidity Documentation: https://docs.s
