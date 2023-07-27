@@ -1,0 +1,18 @@
+{
+  "name": "glx-dao",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "hardhat": "^2.17.0"
+  },
+  "dependencies": {
+    "ethers": "^6.6.5"
+  }
+}

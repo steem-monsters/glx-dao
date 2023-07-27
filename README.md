@@ -1,119 +1,122 @@
-# GLX Token Contract Readme
+# GLX DAO - Comprehensive Readme
 
-## Overview
+GLX DAO is a Decentralized Autonomous Organization that implements a governance token contract called GLX, which allows users to participate in voting on proposals to influence the decision-making process within the organization. This Readme provides a comprehensive guide on how to set up and run the GLX DAO application using TypeScript and Hardhat.
 
-The GLX token contract is a Solidity smart contract representing the "Genesis League Governance" token (GLX). It is an implementation of the ERC-20 standard, with additional functionality for voting delegation and a cross-chain bridge. This document provides comprehensive information about the GLX token contract, including its features, functions, and usage guidelines.
+## Table of Contents
 
-## Contract Details
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Hardhat Configuration](#hardhat-configuration)
+- [GLX Token Contract](#glx-token-contract)
+- [Deployment](#deployment)
+- [Interacting with the GLX DAO](#interacting-with-the-glx-dao)
+- [Testing](#testing)
+- [Additional Resources](#additional-resources)
 
-### Token Information
+## Getting Started
 
-- **Name:** Genesis League Governance
-- **Symbol:** GLX
-- **Decimals:** 18
-- **Total Supply:** 0 (initially)
+### Prerequisites
 
-### Token Holders
+To set up and run the GLX DAO application, ensure you have the following installed on your system:
 
-The contract maintains a record of token balances for each account and allows transferring tokens between accounts. Token holders can view their own balances and approve other accounts to spend tokens on their behalf.
+1. Node.js: GLX DAO is built using TypeScript, so make sure you have Node.js installed. You can download it from the official website: https://nodejs.org/
 
-### Voting and Delegation
+2. Git: You will need Git installed to clone the GLX DAO repository.
 
-The GLX token contract includes a delegation mechanism, allowing token holders to delegate their voting power to another address. The delegation is used for voting in governance decisions. Delegating votes to another address does not transfer token ownership.
+### Installation
 
-The contract keeps track of voting power checkpoints for each account, allowing efficient vote balance retrieval. The `getCurrentVotes` and `getPriorVotes` functions provide access to the current and past vote balances for a given account.
+Follow these steps to set up the GLX DAO application:
 
-### Stake Modifier Integration
+1. Clone the Repository:
 
-The contract integrates with an external contract (`IStakeModifier`) to modify the voting power of accounts based on certain conditions. If the `stakeModifier` contract address is set, the voting power of an account is adjusted accordingly. The `getModifiedVotes` function calculates the modified voting power for an account, considering the external stake modifier.
+```bash
+git clone <repository-url>
+cd glx-dao
+```
 
-### Admin and Minter Roles
+2. Install Dependencies:
 
-The contract includes an admin role that can update the admin, minter, and stake modifier addresses. The admin role can also mint new tokens to designated accounts.
+```bash
+npm install
+```
 
-The minter role is allowed to call the `mint` function to create additional tokens and distribute them to specified accounts.
+## Hardhat Configuration
 
-## Functions
+Hardhat is used as the development environment and build tool for the GLX DAO application. The configuration for Hardhat is defined in the `hardhat.config.ts` file in the root directory.
 
-The contract includes several functions to interact with the token and delegate voting power. Here is a brief overview of the key functions:
+The configuration specifies the solidity version, network settings, and other options for compiling, testing, and deploying contracts.
 
-- **`allowance(address account, address spender) external view returns (uint256)`**: Get the number of tokens `spender` is approved to spend on behalf of `account`.
-- **`approve(address spender, uint256 rawAmount) external returns (bool)`**: Approve `spender` to transfer up to `amount` from `msg.sender`.
-- **`balanceOf(address account) external view returns (uint256)`**: Get the number of tokens held by the `account`.
-- **`transfer(address dst, uint256 rawAmount) public returns (bool)`**: Transfer `amount` tokens from `msg.sender` to `dst`.
-- **`transferFrom(address src, address dst, uint256 rawAmount) public returns (bool)`**: Transfer `amount` tokens from `src` to `dst` if `msg.sender` has been approved to spend the tokens.
-- **`delegate(address delegatee) public`**: Delegate votes from `msg.sender` to `delegatee`.
-- **`delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s) public`**: Delegates votes from signatory to `delegatee` using an EIP-712 signature.
-- **`getCurrentVotes(address account) external view returns (uint96)`**: Get the current votes balance for `account`.
-- **`getPriorVotes(address account, uint256 blockNumber) public view returns (uint96)`**: Determine the prior number of votes for an account as of a specific block number.
-- **`setAdmin(address newAdmin) external adminOnly`**: Set a new admin address. Only callable by the current admin.
-- **`setMinter(address newMinter) external adminOnly`**: Set a new minter address. Only callable by the current admin.
-- **`setStakeModifier(address newStakeModifier) external adminOnly`**: Set a new stake modifier contract address. Only callable by the current admin.
-- **`mint(address toAccount, uint256 amount) external minterOnly`**: Mint additional tokens to the specified account. Only callable by the current minter.
+## GLX Token Contract
 
-### Cross-chain Bridge Functions
+The GLX token contract is defined in the `contracts/GLX.sol` file. This contract implements the functionality of an ERC-20 token with additional features for voting and delegation. Key functionalities of the GLX token contract include:
 
-The contract also includes functions for handling cross-chain transfers through a bridge:
+- Token Name, Symbol, and Decimals: The GLX token adheres to the EIP-20 standard with a name, symbol, and decimal places.
 
-- **`bridgeTransfer(address bridgeAddress, uint256 rawAmount, string calldata externalAddress) external returns(bool)`**: Transfer tokens to the cross-chain bridge.
-- **`bridgeTransferFrom(address sourceAddress, address bridgeAddress, uint256 rawAmount, string calldata externalAddress) external returns(bool)`**: Transfer tokens from an address to the cross-chain bridge.
+- Token Balances: The contract maintains the balance of tokens for each account.
 
-## Events
+- Delegation: Token holders can delegate their voting power to another account to participate in governance.
 
-The contract emits several events to keep track of important activities:
+- Voting Power: The voting power of each account is determined based on the number of tokens they hold, with modifications using a StakeModifier contract.
 
-- **`Transfer(address indexed from, address indexed to, uint256 amount)`**: Emitted when tokens are transferred between accounts.
-- **`Approval(address indexed owner, address indexed spender, uint256 amount)`**: Emitted when an account approves another to spend tokens on its behalf.
-- **`DelegateChanged(address indexed delegator, address indexed fromDelegate, address indexed toDelegate)`**: Emitted when an account changes its delegate (voting power delegation).
-- **`DelegateVotesChanged(address indexed delegate, uint256 previousBalance, uint256 newBalance)`**: Emitted when a delegate account's vote balance changes.
-- **`SetAdmin(address indexed newAdmin, address indexed oldAdmin)`**: Emitted when the admin address is updated.
-- **`SetMinter(address indexed newMinter, address indexed oldAdmin)`**: Emitted when the minter address is updated.
-- **`BridgeTransfer(address indexed sender, address indexed receiver, uint256 amount, string externalAddress)`**: Emitted when tokens are transferred to the cross-chain bridge.
-- **`SetStakeModifier(address indexed newStakeModifier, address indexed oldStakeModifier)`**: Emitted when the stake modifier contract address is updated.
+- Checkpoints: The contract keeps track of voting checkpoints for each account to enable voting snapshots.
 
-## Usage
+- Minting: The contract allows an admin address to mint additional tokens.
 
-Before deploying the contract, ensure that you have the required information for constructor parameters:
+- Cross-chain Bridge: The contract allows transferring tokens to a cross-chain bridge for compatibility with other blockchains.
 
-- `adminAddress`: The address with admin rights for the contract.
-- `minterAddress`: The address with minter rights, capable of calling the `mint` function.
-- `stakeModifierAddress`: The address of the stake modifier contract that implements the `IStakeModifier` interface.
+## Deployment
 
-After deployment, the contract can be used as follows:
+To deploy the GLX token contract to a network, follow these steps:
 
-1. Token Holders:
-   - View your token balance using the `balanceOf` function.
-   - Transfer tokens to other accounts using the `transfer` function.
-   - Approve other accounts to spend tokens on your behalf using the `approve` function.
-   - Delegate your voting power to another address using the `delegate` function.
+1. Set up Infura: You will need an Infura project ID to connect to the desired Ethereum network (e.g., Goerli). Sign up for a free account on the Infura website and obtain the project ID.
 
-2. Delegated Voting:
-   - View the current vote balance for an account using the `getCurrentVotes` function.
-   - Determine the prior vote balance for an account at a specific block number using the `getPriorVotes` function.
+2. Update `secrets.json`: Create a `secrets.json` file in the root directory with your Infura project ID and a private key for an account on the desired network.
 
-3. Admin and Minter Actions:
-   - Set a new admin address using the `setAdmin` function (admin-only).
-   - Set a new minter address using the `setMinter` function (admin-only).
-   - Set a new stake modifier contract address using the `setStakeModifier` function (admin-only).
-   - Mint new tokens to designated accounts using the `mint` function (minter-only).
+3. Compile Contracts: Before deploying, compile the Solidity contracts using Hardhat:
 
-4. Cross-Chain Bridge:
-   - Transfer tokens to the cross-chain bridge using the `bridgeTransfer` function.
+```bash
+npx hardhat compile
+```
 
+4. Deploy the Contract: Use the `deployGLX.ts` script to deploy the GLX token contract to the desired network. Run:
 
-   - Transfer tokens from an address to the cross-chain bridge using the `bridgeTransferFrom` function.
+```bash
+npx hardhat run --network <network-name> deploy/deployGLX.ts
+```
 
-## Security Considerations
+Replace `<network-name>` with the name of the network you want to deploy to, such as `goerli`, `rinkeby`, or `mainnet`.
 
-- Before deploying the contract, thoroughly review the code and perform security audits to identify potential vulnerabilities.
-- Ensure that the admin and minter roles are assigned to trusted addresses only.
-- Use secure methods for storing sensitive data, such as private keys for EIP-712 signature verification.
-- Be cautious when interacting with external contracts, especially the `stakeModifier` contract, to prevent potential exploits.
+## Interacting with the GLX DAO
 
-## Disclaimer
+To interact with the GLX DAO contract after deployment, you can use a wallet or a DApp that supports the Ethereum network you deployed to. Interactions with the contract include:
 
-The provided information is for educational purposes only and should not be considered as financial or investment advice. Deploying and using smart contracts involves risks, and users should exercise caution and conduct due diligence before interacting with the contract.
+- Transferring Tokens: Users can transfer GLX tokens to other accounts.
 
-## License
+- Delegation: Token holders can delegate their voting power to another address.
 
-The GLX token contract is open-source software released under the [MIT License](https://opensource.org/licenses/MIT). You are free to use, modify, and distribute the contract following the terms of the license.
+- Voting: Delegators and token holders can vote on governance proposals.
+
+- View Voting Power: Users can check their current voting power.
+
+## Testing
+
+Testing the GLX DAO contract is crucial to ensure its functionality and security. The test cases are defined in the `test` directory using Hardhat's testing framework.
+
+To run the tests, use the following command:
+
+```bash
+npx hardhat test --network <network-name>
+```
+
+Replace `<network-name>` with the name of the network you want to test on.
+
+## Additional Resources
+
+For more information on Solidity, Hardhat, and Ethereum development, refer to the following resources:
+
+- Solidity Documentation: https://docs.soliditylang.org/
+
+- Hardhat Documentation: https://hardhat.org/getting-started/
+
+- Ethereum Development with Hardhat and Typescript:
