@@ -29,7 +29,7 @@ describe("GLUSD Contract", function () {
   
   it("Should have correct initial values", async function () {
     // Test token name, symbol, and decimals
-    expect(await glusd.name()).to.equal("Genesis League Governance");
+    expect(await glusd.name()).to.equal("Genesis League USD");
     expect(await glusd.symbol()).to.equal("GLUSD");
     expect(await glusd.decimals()).to.equal(18);
   
