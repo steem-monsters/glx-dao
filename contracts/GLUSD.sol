@@ -2,7 +2,7 @@ pragma solidity ^0.5.16;
 
 import './interfaces/IStakeModifier.sol';
 
-contract GLX {
+contract GLUSD {
     /// @notice EIP-20 token name for this token
     string public constant name = "Genesis League USD";
 

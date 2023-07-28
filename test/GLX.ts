@@ -1,7 +1,6 @@
-import { expect, use } from "chai";
+import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Contract, ContractFactory, Signer } from "ethers";
-import chai from "chai";
 
 // Import the smart contract artifacts
 // import GLXArtifact from "../artifacts/contracts/GLX.sol/GLX.json";
@@ -28,7 +27,6 @@ describe("GLX Contract", function () {
     await glx.deployed();
   });
   
-
   it("Should have correct initial values", async function () {
     // Test token name, symbol, and decimals
     expect(await glx.name()).to.equal("Genesis League Governance");
@@ -153,7 +151,6 @@ describe("GLX Contract", function () {
     expect(transferEventFound, "Transfer event not emitted").to.be.true;
   });
   
-
   it("Should approve tokens for delegated transfers", async function () {
     // Mint some tokens to account1
     const amountToMint = ethers.utils.parseEther("1000");
@@ -345,7 +342,6 @@ describe("GLX Contract", function () {
     expect(priorVotes).to.equal(expectedVotes);
   });
   
-
   it("Should mint new tokens by the minter", async function () {
     // Get the minter's address from the contract deployment
     const minterAddress = await minter.getAddress();
