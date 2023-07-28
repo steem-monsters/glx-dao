@@ -82,7 +82,7 @@ npx hardhat compile
 4. Deploy the Contract: Use the `deployGLX.ts` script to deploy the GLX token contract to the desired network. Run:
 
 ```bash
-npx hardhat run --network <network-name> deploy/deployGLX.ts
+npx hardhat run --network <network-name> scripts/deploy.ts
 ```
 
 Replace `<network-name>` with the name of the network you want to deploy to, such as `goerli`, `rinkeby`, or `mainnet`.
