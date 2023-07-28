@@ -5,16 +5,53 @@ dotenv.config();
 
 import { deployGLX, deployGLUSD } from "./deploy/index";
 
-let GLX: string, GLUSD: string;
+const {
+  PUBLIC_KEY,
+  PRIVATE_KEY,
+  INFURA_API_KEY,
+  ADMIN_ADDRESS,
+  MINTER_ADDRESS,
+  STAKE_MODIFIER_ADDRESS,
+  GLX,
+  GLUSD,
+} = process.env;
+
+let glx: string, glusd: string;
 
 const deploy = async () => {
-  GLX = process.env.GLX ?? (await deployGLX());
-  GLUSD = process.env.GLUSD ?? (await deployGLUSD());
+  if (GLX == "") {
+    glx = await deployGLX(
+      ADMIN_ADDRESS ?? "",
+      MINTER_ADDRESS ?? "",
+      STAKE_MODIFIER_ADDRESS ?? ""
+    );
+  } else {
+    glx = GLX ?? "";
+  }
+
+  if (GLUSD == "") {
+    glusd = await deployGLUSD(
+      ADMIN_ADDRESS ?? "",
+      MINTER_ADDRESS ?? "",
+      STAKE_MODIFIER_ADDRESS ?? ""
+    );
+  } else {
+    glusd = GLUSD ?? "";
+  }
 };
 
 const main = async () => {
   await deploy();
-  await devEnv(GLX, GLUSD);
+  await devEnv(
+    glx,
+    glusd,
+    PUBLIC_KEY,
+    PRIVATE_KEY,
+    INFURA_API_KEY,
+    ADMIN_ADDRESS,
+    MINTER_ADDRESS,
+    STAKE_MODIFIER_ADDRESS
+  );
 };
 
 main().catch((error) => {
