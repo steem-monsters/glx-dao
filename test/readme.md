@@ -62,10 +62,3 @@ The GLX contract is a decentralized governance token contract. The test suite co
 - Ensuring the update of admin, minter, and stake modifier addresses.
 
 The test suite uses Hardhat for compiling and running the contracts and Chai for assertions.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-```
-
-Make sure to replace "your-username/your-repo" with the appropriate GitHub repository URL for your project. Additionally, update the "Description" section with any additional relevant information about the contract and its functionalities.
