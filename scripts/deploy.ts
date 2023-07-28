@@ -1,5 +1,5 @@
 // Import the necessary modules and functions
-import { devEnv } from "../dev/inxex"; // Import the devEnv function from the 'inxex' module
+import { devEnv } from "../dev/index"; // Import the devEnv function from the 'index' module
 import * as dotenv from "dotenv"; // Import the 'dotenv' module to read environment variables
 dotenv.config(); // Load the environment variables from the '.env' file
 
