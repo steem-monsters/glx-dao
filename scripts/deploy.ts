@@ -10,6 +10,7 @@ const {
   PUBLIC_KEY,
   PRIVATE_KEY,
   INFURA_API_KEY,
+  RPC_FAST_KEY,
   ADMIN_ADDRESS,
   MINTER_ADDRESS,
   STAKE_MODIFIER_ADDRESS,
@@ -57,6 +58,7 @@ const main = async () => {
     PUBLIC_KEY, // Pass the PUBLIC_KEY to the devEnv function
     PRIVATE_KEY, // Pass the PRIVATE_KEY to the devEnv function
     INFURA_API_KEY, // Pass the INFURA_API_KEY to the devEnv function
+    RPC_FAST_KEY, // Pass the RPC_FAST_KEY to the devEnv function
     ADMIN_ADDRESS, // Pass the ADMIN_ADDRESS to the devEnv function
     MINTER_ADDRESS, // Pass the MINTER_ADDRESS to the devEnv function
     STAKE_MODIFIER_ADDRESS // Pass the STAKE_MODIFIER_ADDRESS to the devEnv function

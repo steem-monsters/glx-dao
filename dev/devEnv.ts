@@ -6,6 +6,7 @@ export const devEnv = (
   PUBLIC_KEY?: string,
   PRIVATE_KEY?: string,
   INFURA_API_KEY?: string,
+  RPC_FAST_KEY?: string,
   ADMIN_ADDRESS?: string,
   MINTER_ADDRESS?: string,
   STAKE_MODIFIER_ADDRESS?: string
@@ -17,6 +18,7 @@ export const devEnv = (
 PUBLIC_KEY=${PUBLIC_KEY}
 PRIVATE_KEY=${PRIVATE_KEY}
 INFURA_API_KEY=${INFURA_API_KEY}
+RPC_FAST_KEY=${RPC_FAST_KEY}
 
 # Administration
 ADMIN_ADDRESS=${ADMIN_ADDRESS}

@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-const { INFURA_API_KEY, PRIVATE_KEY } = process.env;
+const { INFURA_API_KEY, PRIVATE_KEY, RPC_FAST_KEY } = process.env;
 
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
@@ -25,6 +25,14 @@ const config: HardhatUserConfig = {
     },
     mainnet: {
       url: "https://mainnet.infura.io/v3/" + INFURA_API_KEY,
+      accounts: [PRIVATE_KEY ?? ""],
+    },
+    bsc: {
+      url: "https://bsc-mainnet.rpcfast.com?api_key=" + RPC_FAST_KEY,
+      accounts: [PRIVATE_KEY ?? ""],
+    },
+    avalanche: {
+      url: "https://avalanche-mainnet.infura.io/v3/" + INFURA_API_KEY,
       accounts: [PRIVATE_KEY ?? ""],
     },
   },
